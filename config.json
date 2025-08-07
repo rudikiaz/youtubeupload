@@ -1,0 +1,18 @@
+{
+  "video_dir": "d:/VIDEOS/recorder",
+  "log_file": "uploaded.txt",
+  "temp_dir": "temp_merged",
+  "ffmpeg_path": "./ffmpeg.exe",
+  "ffprobe_path": "./ffprobe.exe",
+  "youtube_client_secrets": "client_secrets.json",
+  "youtube_credentials": "youtube_credentials.json",
+  "youtube_scopes": ["https://www.googleapis.com/auth/youtube.upload"],
+  "early_morning_cutoff": 4,
+  "max_file_size_gb": 2.0,
+  "video_quality": "1440p",
+  "default_privacy": "private",
+  "default_category": "20",
+  "default_tags": ["gaming", "arena", "pvp"],
+  "max_retries": 3,
+  "retry_delay": 5
+}
