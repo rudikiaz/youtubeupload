@@ -61,7 +61,11 @@ class VideoUploadManager:
         if errors:
             raise ConfigurationError(f"Configuration validation failed: {'; '.join(errors)}")
         
+        # Note: Client secrets are now embedded in the executable
+        # No need to check for external client_secrets.json file
+        
         return config
+    
     
     def _load_uploaded_files(self):
         """Load list of already uploaded files."""

@@ -39,6 +39,32 @@ class YouTubeUploader:
         if not GOOGLE_APIS_AVAILABLE:
             logger.warning("Google API libraries not available. Install with: pip install google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client")
     
+    def _print_setup_instructions(self):
+        """Print detailed instructions for setting up YouTube API credentials."""
+        print("\n" + "="*80)
+        print("❌ YOUTUBE API CREDENTIALS SETUP REQUIRED")
+        print("="*80)
+        print("📋 To set up YouTube API credentials:")
+        print("")
+        print("1. Go to Google Cloud Console: https://console.cloud.google.com/")
+        print("2. Create a new project or select an existing one")
+        print("3. Enable the YouTube Data API v3:")
+        print("   • Go to APIs & Services > Library")
+        print("   • Search for 'YouTube Data API v3'")
+        print("   • Click on it and enable it")
+        print("4. Create OAuth 2.0 credentials:")
+        print("   • Go to APIs & Services > Credentials")
+        print("   • Click 'Create Credentials' > 'OAuth 2.0 Client ID'")
+        print("   • Choose 'Desktop application' as the application type")
+        print("   • Give it a name (e.g., 'YouTube Video Uploader')")
+        print("   • Download the credentials JSON file")
+        print("5. Rename the downloaded file to 'client_secrets.json'")
+        print("6. Place it in the same directory as this application")
+        print("")
+        print("🔗 Direct link: https://console.cloud.google.com/apis/credentials")
+        print("📖 Detailed guide: https://developers.google.com/youtube/v3/quickstart/python")
+        print("="*80)
+    
     def _get_credentials(self) -> Credentials:
         """
         Get valid credentials for YouTube API.
@@ -73,8 +99,10 @@ class YouTubeUploader:
             
             if not creds:
                 if not os.path.exists(self.config.youtube_client_secrets):
+                    self._print_setup_instructions()
                     raise AuthenticationError(
-                        f"Client secrets file not found: {self.config.youtube_client_secrets}"
+                        f"Client secrets file not found: {self.config.youtube_client_secrets}. "
+                        f"Please follow the setup instructions above to obtain this file."
                     )
                 
                 try:
@@ -123,6 +151,46 @@ class YouTubeUploader:
             logger.warning(f"Failed to save credentials: {e}")
         
         return creds
+    
+    def _print_setup_instructions(self):
+        """Print detailed instructions for setting up YouTube API credentials."""
+        print("\n" + "="*80)
+        print("🔑 YOUTUBE API CREDENTIALS SETUP REQUIRED")
+        print("="*80)
+        print("The file 'client_secrets.json' is missing. Follow these steps to set it up:")
+        print()
+        print("1. 🌐 Go to Google Cloud Console:")
+        print("   https://console.cloud.google.com/")
+        print()
+        print("2. 📁 Create or select a project:")
+        print("   - Click 'Select a project' dropdown at the top")
+        print("   - Create a new project or select an existing one")
+        print()
+        print("3. 🔌 Enable YouTube Data API v3:")
+        print("   - Go to 'APIs & Services' > 'Library'")
+        print("   - Search for 'YouTube Data API v3'")
+        print("   - Click on it and press 'Enable'")
+        print()
+        print("4. 🔐 Create OAuth 2.0 credentials:")
+        print("   - Go to 'APIs & Services' > 'Credentials'")
+        print("   - Click '+ CREATE CREDENTIALS' > 'OAuth client ID'")
+        print("   - Choose 'Desktop application' as application type")
+        print("   - Give it a name (e.g., 'YouTube Video Uploader')")
+        print("   - Click 'Create'")
+        print()
+        print("5. 💾 Download the credentials:")
+        print("   - In the credentials list, find your new OAuth 2.0 client")
+        print("   - Click the download button (⬇️) on the right")
+        print("   - Rename the downloaded file to 'client_secrets.json'")
+        print("   - Place it in the same directory as this application")
+        print()
+        print("6. 🚀 Run the application again")
+        print("   - The first run will open a browser for authorization")
+        print("   - Follow the prompts to authorize the application")
+        print()
+        print("📚 More info: https://developers.google.com/youtube/v3/getting-started")
+        print("="*80)
+        print()
     
     def _manual_oauth_flow(self, flow: InstalledAppFlow) -> Credentials:
         """

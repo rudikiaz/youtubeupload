@@ -17,5 +17,5 @@
   "individual_video_title_template": "{username} {activity}",
   "max_retries": 3,
   "retry_delay": 5,
-  "delete_after_upload": true
+  "delete_after_upload": false
 }
