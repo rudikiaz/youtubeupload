@@ -227,7 +227,7 @@ class FilenameParser:
     
     def parse_title(self, filename: str) -> str:
         """
-        Extract title from filename.
+        Extract title from filename using configurable template.
         
         Args:
             filename: Video filename
@@ -251,7 +251,13 @@ class FilenameParser:
                 raise InvalidFilenameError(f"Not enough words in activity part: {filename}")
             
             first_two_words = " ".join(activity_words[:2]).lower()
-            return f"{username} {first_two_words}"
+            
+            # Use configurable title template
+            return self.config.individual_video_title_template.format(
+                username=username,
+                activity=first_two_words,
+                filename=filename
+            )
             
         except Exception as e:
             raise InvalidFilenameError(f"Error parsing title from {filename}: {e}")

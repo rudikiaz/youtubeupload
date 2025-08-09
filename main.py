@@ -88,6 +88,10 @@ class VideoUploadManager:
     
     def _safe_delete_file(self, file_path: str):
         """Safely delete a file with error handling."""
+        if not self.config.delete_after_upload:
+            logger.info(f"Skipping deletion (disabled in config): {file_path}")
+            return
+            
         try:
             os.remove(file_path)
             logger.info(f"Deleted: {file_path}")
@@ -189,7 +193,7 @@ class VideoUploadManager:
                 return False
             
             # Create description with timestamps
-            title = f"Rudikiaz arenas for {date.strftime('%d-%m-%Y')}"
+            title = self.config.merged_video_title_template.format(date=date.strftime('%d-%m-%Y'))
             description = self._create_merged_description(sorted_files)
             
             logger.info(f"Uploading merged video: {merged_filename}")

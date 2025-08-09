@@ -30,6 +30,7 @@ MANIFEST
 # PyInstaller
 *.manifest
 *.spec
+distribution/
 
 # Installer logs
 pip-log.txt
@@ -79,11 +80,10 @@ temp_merged/
 video_uploader.log
 *.log
 
-# FFmpeg executables (optional - uncomment if you don't want to track them)
-# ffmpeg.exe
-# ffprobe.exe
+# FFmpeg executables (keep these separate from executable)
+ffmpeg.exe
+ffprobe.exe
 
 # Backup files
 *.backup
 *.bak
-*.exe

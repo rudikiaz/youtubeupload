@@ -80,8 +80,11 @@ def create_config():
         "default_privacy": "private",
         "default_category": "20",
         "default_tags": ["gaming", "arena", "pvp"],
+        "merged_video_title_template": "Rudikiaz arenas for {date}",
+        "individual_video_title_template": "{username} {activity}",
         "max_retries": 3,
-        "retry_delay": 5
+        "retry_delay": 5,
+        "delete_after_upload": True
     }
     
     try:

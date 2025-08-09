@@ -42,9 +42,16 @@ class VideoConfig:
     default_category: str = "20"  # Gaming category
     default_tags: list = None
     
+    # Title settings
+    merged_video_title_template: str = "Rudikiaz arenas for {date}"  # Template for merged videos
+    individual_video_title_template: str = "{username} {activity}"  # Template for individual videos
+    
     # Error handling
     max_retries: int = 3
     retry_delay: int = 5  # seconds
+    
+    # File management
+    delete_after_upload: bool = True  # Whether to delete videos after successful upload
     
     def __post_init__(self):
         if self.default_tags is None:
@@ -107,8 +114,11 @@ class VideoConfig:
             default_privacy=os.getenv('DEFAULT_PRIVACY', 'private'),
             default_category=os.getenv('DEFAULT_CATEGORY', '20'),
             default_tags=os.getenv('DEFAULT_TAGS', 'gaming,arena,pvp').split(','),
+            merged_video_title_template=os.getenv('MERGED_VIDEO_TITLE_TEMPLATE', 'Rudikiaz arenas for {date}'),
+            individual_video_title_template=os.getenv('INDIVIDUAL_VIDEO_TITLE_TEMPLATE', '{username} {activity}'),
             max_retries=int(os.getenv('MAX_RETRIES', '3')),
-            retry_delay=int(os.getenv('RETRY_DELAY', '5'))
+            retry_delay=int(os.getenv('RETRY_DELAY', '5')),
+            delete_after_upload=os.getenv('DELETE_AFTER_UPLOAD', 'true').lower() in ('true', '1', 'yes')
         )
     
     def validate(self) -> list:
@@ -150,8 +160,11 @@ def create_default_config(config_path: str) -> None:
         "default_privacy": "private",
         "default_category": "20",
         "default_tags": ["gaming", "arena", "pvp"],
+        "merged_video_title_template": "Rudikiaz arenas for {date}",
+        "individual_video_title_template": "{username} {activity}",
         "max_retries": 3,
-        "retry_delay": 5
+        "retry_delay": 5,
+        "delete_after_upload": True
     }
     
     with open(config_path, 'w') as f:
